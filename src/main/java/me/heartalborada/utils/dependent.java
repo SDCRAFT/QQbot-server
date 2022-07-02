@@ -88,7 +88,7 @@ public class dependent {
      * @param xmlTag XML标签
      * @return 版本名
      */
-    static String getLibraryVersionMaven(String groupId, String artifactId, String repoUrl, String xmlTag) throws RuntimeException, IOException, ParserConfigurationException, SAXException {
+    public static String getLibraryVersionMaven(String groupId, String artifactId, String repoUrl, String xmlTag) throws RuntimeException, IOException, ParserConfigurationException, SAXException {
         File CacheDir = new File(me.heartalborada.Config.path,"cache");
         if(!CacheDir.exists() && !CacheDir.mkdirs()) throw new RuntimeException("Failed to create " + CacheDir.getPath());
         String metaFileName = "maven-metadata-" + groupId + "." + artifactId + ".xml";
@@ -144,7 +144,7 @@ public class dependent {
      * @param extra 额外参数
      * @param path 保存目录
      */
-    static void loadLibraryClassMaven(String groupId, String artifactId, String version, String extra, String repo, File path) throws RuntimeException, IOException {
+    public static void loadLibraryClassMaven(String groupId, String artifactId, String version, String extra, String repo, File path) throws RuntimeException, IOException {
         String name = artifactId + "-" + version + ".jar"; // 文件名
 
         // jar
