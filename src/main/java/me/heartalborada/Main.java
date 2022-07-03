@@ -3,6 +3,8 @@ package me.heartalborada;
 import me.heartalborada.listener.tencentListener;
 import me.heartalborada.utils.librariesLoader;
 import me.heartalborada.utils.socket;
+import net.mamoe.mirai.Bot;
+import net.mamoe.mirai.BotFactory;
 import net.mamoe.mirai.event.Event;
 import net.mamoe.mirai.event.EventChannel;
 import net.mamoe.mirai.event.GlobalEventChannel;
@@ -15,8 +17,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static me.heartalborada.config.librariesDir;
-import static me.heartalborada.config.mvnRepo;
+import static me.heartalborada.config.*;
 
 public class Main{
     private static final Logger logger = LogManager.getLogger("Main");
@@ -24,6 +25,12 @@ public class Main{
     public static void main(String[] args) {
         if (!librariesDir.exists() && !librariesDir.mkdirs()) {
             throw new RuntimeException("Failed to create " + librariesDir.getPath());
+        }
+        if (!miraiDir.exists() && !miraiDir.mkdirs()) {
+            throw new RuntimeException("Failed to create " + miraiDir.getPath());
+        }
+        if (!miraiDir.exists() && !miraiDir.mkdirs()) {
+            throw new RuntimeException("Failed to create " + miraiDir.getPath());
         }
         List<String[]> list = new LinkedList<>();
         list.add(new String[]{"org.slf4j", "slf4j-simple", "1.7.25", ""});
@@ -42,6 +49,7 @@ public class Main{
             throw new RuntimeException(e);
         }
         socket1 = new socket(config.port);
+
         EventChannel<Event> channel = GlobalEventChannel.INSTANCE.filter(event -> event instanceof BotEvent && ((BotEvent) event).getBot().getId() == config.botID);
         channel.exceptionHandler(e -> {logger.error(e.getMessage());return null;} );
         channel.registerListenerHost(new tencentListener());
