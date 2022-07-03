@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Add-Opens: java.base/java.lang java.base/java.lang.reflect java.base/java.net java.base/jdk.internal.loader
+Add-Exports: java.base/jdk.internal.loader
+Created-By: Copyright(c) 2020-2022 heartalborada.
+Main-Class: me.heartalborada.Main

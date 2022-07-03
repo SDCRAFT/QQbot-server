@@ -7,6 +7,6 @@ import java.io.File;
 
 public class Config {
     public static String path = System.getProperty("usr.dir");
-    public static Logger logger = LogManager.getLogger();
     public static File LibrariesDir = new File(path,"libs");
+    public static String mvnRepo = "https://maven.aliyun.com/repository/public";
 }

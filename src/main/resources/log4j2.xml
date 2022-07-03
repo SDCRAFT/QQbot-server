@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">   <!--设置log4j2自身运行的日志显示级别-->
+    <Properties>
+        <Property name="PR">./log</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">  			 <!--输出到控制台-->
+            <PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%c]-[%p] %m%n"/>
+        </Console>
+        <RollingFile name="RollingFile" fileName="${PR}/latest.log"
+                     filePattern="${PR}/log-%i.all.log.gz">   <!--输出到日志文件-->
+            <PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%c]-[%p] - %m%n"/>
+            <!-- 日志文件大小 -->
+            <SizeBasedTriggeringPolicy size="100MB"/>
+            <!-- 最多保留文件数 -->
+            <DefaultRolloverStrategy max="200"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>     								<!--指定所使用的日志记录器以及显示级别-->
+        <Root level="info">						<!--显示级别-->
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
