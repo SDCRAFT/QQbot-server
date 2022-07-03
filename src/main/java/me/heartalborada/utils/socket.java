@@ -1,10 +1,8 @@
 package me.heartalborada.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.MalformedJsonException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.java_websocket.WebSocket;
@@ -12,16 +10,13 @@ import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
 import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
 import java.util.*;
 
-import static java.lang.String.format;
-
-public class ws extends WebSocketServer {
+public class socket extends WebSocketServer {
     private static final Logger logger = LogManager.getLogger("WebSocket");
     private static final List<WebSocket> list = new ArrayList<>();
 
-    public ws(int port) {
+    public socket(int port) {
         super(new InetSocketAddress(port));
         this.start();
     }
@@ -112,7 +107,7 @@ public class ws extends WebSocketServer {
         logger.info("WebSocket listening on " + this.getPort());
     }
 
-    private void sendMsg(Object o) {
+    public void sendMsg(Object o) {
         for (WebSocket ws : list) {
             ws.send(o.toString());
         }

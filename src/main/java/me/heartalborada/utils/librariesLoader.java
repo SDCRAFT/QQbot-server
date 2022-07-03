@@ -1,5 +1,6 @@
 package me.heartalborada.utils;
 
+import me.heartalborada.config;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +24,7 @@ import java.nio.file.Files;
 /**
  * Jar 库加载器
  */
-public class dependent {
+public class librariesLoader {
     private static final Logger logger = LogManager.getLogger("DependentLoader");
 
     private static void downloadFile(File file, URL url) throws IOException {
@@ -97,7 +98,7 @@ public class dependent {
      * @return 版本名
      */
     public static String getLibraryVersionMaven(String groupId, String artifactId, String repoUrl, String xmlTag) throws RuntimeException, IOException, ParserConfigurationException, SAXException {
-        File CacheDir = new File(me.heartalborada.Config.path, "cache");
+        File CacheDir = new File(config.path, "cache");
         if (!CacheDir.exists() && !CacheDir.mkdirs())
             throw new RuntimeException("Failed to create " + CacheDir.getPath());
         String metaFileName = "maven-metadata-" + groupId + "." + artifactId + ".xml";
@@ -179,6 +180,7 @@ public class dependent {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         URL url = file.toURI().toURL();
         if (classLoader instanceof URLClassLoader) {
+            //Java 8
             URLClassLoader sysLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
             Class<URLClassLoader> sysClass = URLClassLoader.class;
             try {
