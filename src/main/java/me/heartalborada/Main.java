@@ -41,9 +41,18 @@ public class Main {
                     mvnRepo,
                     LibrariesDir
             );
+            dependent.loadLibraryClassMaven(
+                    "com.google.code.gson",
+                    "gson",
+                    "2.9.0",
+                    "",
+                    mvnRepo,
+                    LibrariesDir
+            );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         ws ws1 = new ws(1145);
+
     }
 }
