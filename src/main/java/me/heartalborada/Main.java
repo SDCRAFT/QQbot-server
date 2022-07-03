@@ -6,6 +6,7 @@ import me.heartalborada.utils.socket;
 import net.mamoe.mirai.event.Event;
 import net.mamoe.mirai.event.EventChannel;
 import net.mamoe.mirai.event.GlobalEventChannel;
+import net.mamoe.mirai.event.Listener;
 import net.mamoe.mirai.event.events.BotEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,11 +41,9 @@ public class Main{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        socket1 = new socket(1145);
+        socket1 = new socket(config.port);
         EventChannel<Event> channel = GlobalEventChannel.INSTANCE.filter(event -> event instanceof BotEvent && ((BotEvent) event).getBot().getId() == config.botID);
-        channel.exceptionHandler(
-                (coroutineContext, throwable) -> logger.error(coroutineContext)
-        );
+        channel.exceptionHandler(e -> {logger.error(e.getMessage());return null;} );
         channel.registerListenerHost(new tencentListener());
     }
 }

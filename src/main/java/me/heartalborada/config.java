@@ -8,4 +8,5 @@ public class config {
     public static final String mvnRepo = "https://maven.aliyun.com/repository/public";
     public static File miraiDir = new File(path,"mirai");
     public static long botID= 0;
+    public static short port = 1145;
 }
