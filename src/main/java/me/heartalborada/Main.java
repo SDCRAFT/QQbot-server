@@ -1,7 +1,12 @@
 package me.heartalborada;
 
+import me.heartalborada.listener.tencentListener;
 import me.heartalborada.utils.librariesLoader;
 import me.heartalborada.utils.socket;
+import net.mamoe.mirai.event.Event;
+import net.mamoe.mirai.event.EventChannel;
+import net.mamoe.mirai.event.GlobalEventChannel;
+import net.mamoe.mirai.event.events.BotEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,7 +17,7 @@ import java.util.List;
 import static me.heartalborada.config.librariesDir;
 import static me.heartalborada.config.mvnRepo;
 
-public class Main {
+public class Main{
     private static final Logger logger = LogManager.getLogger("Main");
     public static socket socket1 = null;
     public static void main(String[] args) {
@@ -36,5 +41,10 @@ public class Main {
             throw new RuntimeException(e);
         }
         socket1 = new socket(1145);
+        EventChannel<Event> channel = GlobalEventChannel.INSTANCE.filter(event -> event instanceof BotEvent && ((BotEvent) event).getBot().getId() == config.botID);
+        channel.exceptionHandler(
+                (coroutineContext, throwable) -> logger.error(coroutineContext)
+        );
+        channel.registerListenerHost(new tencentListener());
     }
 }

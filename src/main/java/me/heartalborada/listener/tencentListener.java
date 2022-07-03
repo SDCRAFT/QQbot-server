@@ -5,8 +5,9 @@ import me.heartalborada.Main;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.contact.Member;
 import net.mamoe.mirai.event.EventHandler;
+import net.mamoe.mirai.event.ListenerHost;
 import net.mamoe.mirai.event.events.*;
-import net.mamoe.mirai.message.data.MessageChain;
+import net.mamoe.mirai.message.data.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +17,7 @@ import java.util.Map;
 import static java.lang.String.format;
 
 @SuppressWarnings("uncheck")
-public class tencentListener {
+public class tencentListener implements ListenerHost {
     private static final Logger logger = LogManager.getLogger("EventListen");
     @EventHandler
     public void OnGroupMessage(GroupMessageEvent g){
@@ -41,5 +42,26 @@ public class tencentListener {
                 e.getBot().getGroups().size()
                 )
         );
+    }
+    @EventHandler
+    public void onMemberJoin(MemberJoinEvent e){
+        MessageChainBuilder mc = new MessageChainBuilder();
+        long id = e.getMember().getId();
+        //这里以后会写文案
+        mc.append(me.heartalborada.utils.time.getNow()).append(new At(id)).append("诞生了");
+        e.getGroup().sendMessage(mc.build());
+    }
+    @EventHandler
+    public void onMemberLeave(MemberLeaveEvent e){
+        MessageChainBuilder mc = new MessageChainBuilder();
+        long id = e.getMember().getId();
+        if(e instanceof MemberLeaveEvent.Kick){
+            //这里以后会写文案
+            mc.append(me.heartalborada.utils.time.getNow()).append(new At(id)).append("爬了");
+        } else {
+            //这里以后会写文案
+            mc.append(me.heartalborada.utils.time.getNow()).append(new At(id)).append("寄了");
+        }
+        e.getGroup().sendMessage(mc.build());
     }
 }
