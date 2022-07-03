@@ -1,7 +1,8 @@
 package me.heartalborada.utils;
 
-import me.heartalborada.Config;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -21,6 +22,7 @@ import java.nio.file.Files;
  * Jar 库加载器
  */
 public class dependent {
+    private static final Logger logger = LogManager.getLogger("DependentLoader");
     private static void downloadFile(File file, URL url) throws IOException {
         try (InputStream is = url.openStream()) {
             Files.copy(is, file.toPath());
@@ -74,7 +76,7 @@ public class dependent {
 
         // 下载正式文件
         if (!file.exists()) {
-            me.heartalborada.Config.logger.info("Downloading " + DownloadURL);
+            logger.info("Downloading " + DownloadURL);
             downloadFile(file, new URL(DownloadURL));
         }
 
@@ -109,7 +111,7 @@ public class dependent {
         if(!metaFileMD5.exists()) throw new RuntimeException("Failed to download " + metaFileMD5Url);
 
         // 验证meta文件
-        me.heartalborada.Config.logger.info("Verifying " + metaFileName);
+        logger.info("Verifying " + metaFileName);
         if (metaFile.exists()) {
             try (FileInputStream fis = new FileInputStream(metaFile)) {
                 if (!DigestUtils.md5Hex(fis).equals(new String(Files.readAllBytes(metaFileMD5.toPath()), StandardCharsets.UTF_8))) {
@@ -123,7 +125,7 @@ public class dependent {
             }
         } else {
             URL metaFileUrl = new URL(repoFormat + "maven-metadata.xml");
-            me.heartalborada.Config.logger.info("Downloading "+ metaFileUrl);
+            logger.info("Downloading "+ metaFileUrl);
             downloadFile(metaFile, metaFileUrl);
             if (!metaFileMD5.exists()) throw new RuntimeException("Failed to download " + metaFileUrl);
         }
@@ -149,7 +151,7 @@ public class dependent {
 
         // jar
         File saveLocation = new File(path, name);
-        me.heartalborada.Config.logger.info("Verifying " + name);
+        logger.info("Verifying " + name);
         if(!downloadLibraryMaven(groupId, artifactId, version, extra, repo, saveLocation, true)){
             throw new RuntimeException("Failed to download libraries!");
         }
@@ -163,23 +165,23 @@ public class dependent {
      * @param file Jar 文件
      */
     static void loadLibraryClassLocal(File file) throws IOException {
-        me.heartalborada.Config.logger.info("Loading library " + file);
+        logger.info("Loading library " + file);
         Method method = null;
         try {
             method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
         } catch (NoSuchMethodException | SecurityException e) {
-            Config.logger.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         boolean acc = method.isAccessible();
         try {
-            if (acc == false) {
+            if (!acc) {
                 method.setAccessible(true);
             }
             URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
             URL url = file.toURI().toURL();
             method.invoke(classLoader,url);
         } catch (Exception e){
-            Config.logger.error(e);
+            logger.error(e);
         } finally {
             method.setAccessible(acc);
         }
