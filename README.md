@@ -3,6 +3,9 @@
 
 本项目使用 ![](https://img.shields.io/github/license/SDCRAFT/QQbot-server)协议
 # 项目信息
+
+[![Coverage Status](https://coveralls.io/repos/github/SDCRAFT/QQbot-server/badge.svg?branch=master)](https://coveralls.io/github/SDCRAFT/QQbot-server?branch=master)
+
 代码信息
 
 ![](https://img.shields.io/tokei/lines/github.com/SDCRAFT/QQbot-server)

@@ -30,6 +30,7 @@ public class Main{
         list.add(new String[]{"org.java-websocket", "Java-WebSocket", "1.5.3", ""});
         list.add(new String[]{"net.mamoe","mirai-core-all","2.11.1","-all"});
         list.add(new String[]{"net.mamoe","mirai-logging-log4j2","2.11.1",""});
+        list.add(new String[]{"org.yaml","snakeyaml","1.30",""});
         try {
             for(String[] strs : list) {
                 librariesLoader.loadLibraryClassMaven(
