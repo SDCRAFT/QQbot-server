@@ -9,6 +9,6 @@ public class config {
     public static File miraiDir = new File(path,"mirai");
     public static File cacheDir = new File(miraiDir,"cache");
     public static File botDir = new File(miraiDir,"bots");
-    public static long botID= 0;
+    public static long botID = 2690098037L;
     public static short port = 1145;
 }

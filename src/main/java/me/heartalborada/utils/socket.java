@@ -13,7 +13,7 @@ import java.net.InetSocketAddress;
 import java.util.*;
 
 public class socket extends WebSocketServer {
-    private static final Logger logger = LogManager.getLogger("WebSocket");
+    private static final Logger logger = LogManager.getLogger();
     private static final List<WebSocket> list = new ArrayList<>();
 
     public socket(int port) {

@@ -10,7 +10,7 @@ import java.io.File;
 import static me.heartalborada.config.miraiDir;
 
 public class login {
-    public static boolean doLogin(long id,String pw){
+    public boolean doLogin(long id,String pw){
         File file = new File(config.botDir, String.valueOf(id));
         if (!file.exists() && !file.mkdirs()) {
             throw new RuntimeException("Failed to create " + file.getPath());
@@ -28,7 +28,7 @@ public class login {
         bot.login();
         return bot.isOnline();
     }
-    public static void autoLogin(){
+    public void autoLogin(){
 
     }
 }
