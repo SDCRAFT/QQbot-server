@@ -39,5 +39,7 @@ jobs:
         java-version: '8'
         distribution: 'adopt'
         cache: maven
+    - name: test
+      run: mvn test
     - name: Check
-      run: mvn -DrepoToken=${{ secrets.CTA }} clean test cobertura:cobertura coveralls:report
+      run: mvn clean -DrepoToken=${{ secrets.CTA }} cobertura:cobertura coveralls:report
